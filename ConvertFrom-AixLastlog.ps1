@@ -45,7 +45,7 @@
 param
 (
     [Parameter(Mandatory = $true,
-                ValueFromPipeline=$true)]
+               ValueFromPipeline=$true)]
     [string]$InputObject
 )
 
