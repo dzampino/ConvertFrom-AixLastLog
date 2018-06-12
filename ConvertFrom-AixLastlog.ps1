@@ -22,31 +22,12 @@ Param
 )
 
 Set-StrictMode -Version Latest
-function New-User
-{
-    New-Object -TypeName PSObject -Property @{
-        username                     = $Username
-        time_last_login              = $TimeLastLogin
-        time_last_unsuccessful_login = $TimeLastUnsuccessfulLogin
-        tty_last_login               = $TtyLastLogin
-        tty_last_unsuccessful_login  = $TtyLastUnsuccessfulLogin
-        host_last_login              = $HostLastLogin
-        host_last_unsuccessful_login = $HostLastUnsuccessfulLogin
-        unsuccessful_login_count     = $UnsuccessfulLoginCount
-    }
-}
-
-$Username = $null
-$TimeLastLogin = $null
-$TimeLastUnsuccessfulLogin = $null
-$TtyLastLogin = $null
-$TtyLastUnsuccessfulLogin = $null
-$HostLastLogin = $null
-$HostLastUnsuccessfulLogin = $null
-$UnsuccessfulLoginCount = $null
 
 $File = Get-Content -Path $InputObject
 $LineNumber = 0 
+
+# Set $Username, otherwise it will throw an error for not being set
+$Username = $null
 
 foreach ($Line in $File)
 {
@@ -135,17 +116,18 @@ foreach ($Line in $File)
         # Skip the first new line it comes across
         if (-not $Username) {Continue}
         $NewUserArgs = @{
-            Username                  = $Username
-            TimeLastLogin             = $TimeLastLogin
-            TimeLastUnsuccessfulLogin = $TimeLastUnsuccessfulLogin
-            TtyLastLogin              = $TtyLastLogin
-            TtyLastUnsuccessfulLogin  = $TtyLastUnsuccessfulLogin
-            HostLastLogin             = $HostLastLogin
-            HostLastUnsuccessfulLogin = $HostLastUnsuccessfulLogin
-            UnsuccessfulLoginCount    = $UnsuccessfulLoginCount
+            username                     = $Username
+            time_last_login              = $TimeLastLogin
+            time_last_unsuccessful_login = $TimeLastUnsuccessfulLogin
+            tty_last_login               = $TtyLastLogin
+            tty_last_unsuccessful_login  = $TtyLastUnsuccessfulLogin
+            host_last_login              = $HostLastLogin
+            host_last_unsuccessful_login = $HostLastUnsuccessfulLogin
+            unsuccessful_login_count     = $UnsuccessfulLoginCount
         }
 
-        New-User @NewUserArgs
+        $Result = New-Object -TypeName PSObject -Property $NewUserArgs
+        Write-Output $Result
 
         # Clear all variables
         $Username = $null
