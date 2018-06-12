@@ -1,3 +1,34 @@
+
+<#PSScriptInfo
+
+.VERSION 1.0
+
+.GUID 00321f7e-d821-4ad4-a481-dae85e6f4990
+
+.AUTHOR David Zampino
+
+.COMPANYNAME 
+
+.COPYRIGHT 
+
+.TAGS powershell aix
+
+.LICENSEURI https://github.com/dzampino/ConvertFrom-AixLastLog/blob/master/LICENSE
+
+.PROJECTURI https://github.com/dzampino/ConvertFrom-AixLastLog
+
+.ICONURI 
+
+.EXTERNALMODULEDEPENDENCIES 
+
+.REQUIREDSCRIPTS 
+
+.EXTERNALSCRIPTDEPENDENCIES 
+
+.RELEASENOTES
+
+#>
+
 function ConvertFrom-AixLastLog {
 <#
 .SYNOPSIS
@@ -9,10 +40,6 @@ function ConvertFrom-AixLastLog {
 
 .PARAMETER InputObject
     The lastlog file or file contents
-
-.NOTES
-    Author: David Zampino
-    Date created: 2018-06-05
 #>
     
     [CmdletBinding(HelpUri = 'https://github.com/dzampino/ConvertFrom-AixLastLog')]
@@ -25,9 +52,7 @@ function ConvertFrom-AixLastLog {
 
     Begin
     {
-        Set-StrictMode -Version Latest
-
-        
+        Set-StrictMode -Version Latest       
     
         # Set $Username, otherwise it will throw an error for not being set
         $Username = $null
@@ -36,7 +61,7 @@ function ConvertFrom-AixLastLog {
     Process 
     {
         $File = Get-Content -Path $InputObject
-        
+
         foreach ($Line in $File)
         {
             try 
