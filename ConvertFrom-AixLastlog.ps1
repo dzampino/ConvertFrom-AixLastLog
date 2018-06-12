@@ -4,16 +4,21 @@
 .DESCRIPTION
     The AIX /etc/security/lastlog contains the list of users and last logon dates. Unfortunately, the file is not 
     in a format that can easily be worked with. In addition, the timestamps are in UTC time and must be converted.
+
+.PARAMETER InputObject
+    The lastlog file or file contents
+
 .NOTES
     Author: David Zampino
     Date created: 2018-06-05
 #>
     
-[CmdletBinding()]
+[CmdletBinding(HelpUri = 'https://github.com/dzampino/ConvertFrom-AixLastLog')]
 Param
 (
-    [Parameter(Mandatory = $true)]
-    $Path
+    [Parameter(Mandatory = $true,
+               ValueFromPipeline=$true)]
+    [string]$InputObject
 )
 
 Set-StrictMode -Version Latest
@@ -40,7 +45,7 @@ $HostLastLogin = $null
 $HostLastUnsuccessfulLogin = $null
 $UnsuccessfulLoginCount = $null
 
-$File = Get-Content -Path $Path
+$File = Get-Content -Path $InputObject
 $LineNumber = 0 
 
 foreach ($Line in $File)
