@@ -2,6 +2,7 @@ function ConvertFrom-AixLastLog {
 <#
 .SYNOPSIS
     Converts an AIX lastlog file into a exportable PowerShell object
+
 .DESCRIPTION
     The AIX /etc/security/lastlog contains the list of users and last logon dates. Unfortunately, the file is not 
     in a format that can easily be worked with. In addition, the timestamps are in UTC time and must be converted.
@@ -118,6 +119,7 @@ function ConvertFrom-AixLastLog {
             }
 
             $Result = New-Object -TypeName PSObject -Property $NewUserArgs
+            
             Write-Output $Result
 
             # Clear all variables
