@@ -65,7 +65,7 @@ foreach ($Line in $File)
                 $Username = $Line -replace ':',''
                 Continue
             }
-            # Test for time of last login
+
             if ($Line -match 'time_last_login')
             {
                 Write-Verbose 'time_last_login found'
@@ -74,7 +74,7 @@ foreach ($Line in $File)
                 $TimeLastLogin = $TimeLastLogin.Trim()
                 Continue
             }
-            # Test for time of last unsuccessful login
+
             if ($Line -match 'time_last_unsuccessful_login')
             {
                 Write-Verbose 'time_last_unsuccessful_login found'
@@ -83,7 +83,7 @@ foreach ($Line in $File)
                 $TimeLastUnsuccessfulLogin = $TimeLastUnsuccessfulLogin.Trim()
                 Continue
             }
-            # Test for terminal of last login
+
             if ($Line -match 'tty_last_login')
             {
                 Write-Verbose 'tty_last_login found'
@@ -92,7 +92,7 @@ foreach ($Line in $File)
                 $TtyLastLogin = $TtyLastLogin.Trim()
                 Continue
             }
-            # Test for type of terminal for last unsuccessful
+
             if ($Line -match 'tty_last_unsuccessful_login')
             {
                 Write-Verbose 'tty_last_unsuccessful_login found'
@@ -101,7 +101,7 @@ foreach ($Line in $File)
                 $TtyLastUnsuccessfulLogin = $TtyLastUnsuccessfulLogin.Trim()
                 Continue
             }
-            # Test for IP address or hostname
+
             if ($Line -match 'host_last_login')
             {
                 Write-Verbose 'host_last_login found'
@@ -110,7 +110,7 @@ foreach ($Line in $File)
                 $HostLastLogin = $HostLastLogin.Trim()
                 Continue
             }
-            # Test for IP address or hostname of last failed login
+
             if ($Line -match 'host_last_unsuccessful_login')
             {
                 Write-Verbose 'host_last_unsuccessful_login found'
@@ -119,7 +119,7 @@ foreach ($Line in $File)
                 $HostLastUnsuccessfulLogin = $HostLastUnsuccessfulLogin.Trim()
                 Continue
             }
-            # Test for IP address or hostname of last failed login
+
             if ($Line -match 'unsuccessful_login_count')
             {
                 Write-Verbose 'unsuccessful_login_count found'
