@@ -24,15 +24,12 @@ param
 Set-StrictMode -Version Latest
 
 $File = Get-Content -Path $InputObject
-$LineNumber = 0 
 
 # Set $Username, otherwise it will throw an error for not being set
 $Username = $null
 
 foreach ($Line in $File)
 {
-    $LineNumber++
-    Write-Verbose "Current line ($LineNumber): $Line"
     try 
     {
         # Check to see if line is a comment; will throw a terminating error if solely a newline
@@ -42,14 +39,12 @@ foreach ($Line in $File)
             # Test for username
             if ($Line -match ':')
             {
-                Write-Verbose 'Username found'
                 $Username = $Line -replace ':',''
                 Continue
             }
 
             if ($Line -match 'time_last_login')
             {
-                Write-Verbose 'time_last_login found'
                 [regex]$RegexTimeLastLogin = '(?<=time_last_login = ).+'
                 $TimeLastLogin = ($RegexTimeLastLogin.Matches($Line)).Value
                 $TimeLastLogin = $TimeLastLogin.Trim()
@@ -58,7 +53,6 @@ foreach ($Line in $File)
 
             if ($Line -match 'time_last_unsuccessful_login')
             {
-                Write-Verbose 'time_last_unsuccessful_login found'
                 [regex]$RegexTimeLastUnsuccessfulLogin = '(?<=time_last_unsuccessful_login = ).+'
                 $TimeLastUnsuccessfulLogin = ($RegexTimeLastUnsuccessfulLogin.Matches($Line)).Value
                 $TimeLastUnsuccessfulLogin = $TimeLastUnsuccessfulLogin.Trim()
@@ -67,7 +61,6 @@ foreach ($Line in $File)
 
             if ($Line -match 'tty_last_login')
             {
-                Write-Verbose 'tty_last_login found'
                 [regex]$RegexTtyLastLogin = '(?<=tty_last_login = ).+'
                 $TtyLastLogin = ($RegexTtyLastLogin.Matches($Line)).Value
                 $TtyLastLogin = $TtyLastLogin.Trim()
@@ -76,7 +69,6 @@ foreach ($Line in $File)
 
             if ($Line -match 'tty_last_unsuccessful_login')
             {
-                Write-Verbose 'tty_last_unsuccessful_login found'
                 [regex]$RegexTtyLastUnsuccessfulLogin = '(?<=tty_last_unsuccessful_login = ).+'
                 $TtyLastUnsuccessfulLogin = ($RegexTtyLastUnsuccessfulLogin.Matches($Line)).Value
                 $TtyLastUnsuccessfulLogin = $TtyLastUnsuccessfulLogin.Trim()
@@ -85,7 +77,6 @@ foreach ($Line in $File)
 
             if ($Line -match 'host_last_login')
             {
-                Write-Verbose 'host_last_login found'
                 [regex]$RegexHostLastLogin = '(?<=host_last_login = ).+'
                 $HostLastLogin= ($RegexHostLastLogin.Matches($Line)).Value
                 $HostLastLogin = $HostLastLogin.Trim()
@@ -94,7 +85,6 @@ foreach ($Line in $File)
 
             if ($Line -match 'host_last_unsuccessful_login')
             {
-                Write-Verbose 'host_last_unsuccessful_login found'
                 [regex]$RegexHostLastUnsuccessfulLogin = '(?<=host_last_unsuccessful_login = ).+'
                 $HostLastUnsuccessfulLogin= ($RegexHostLastUnsuccessfulLogin.Matches($Line)).Value
                 $HostLastUnsuccessfulLogin = $HostLastUnsuccessfulLogin.Trim()
@@ -103,7 +93,6 @@ foreach ($Line in $File)
 
             if ($Line -match 'unsuccessful_login_count')
             {
-                Write-Verbose 'unsuccessful_login_count found'
                 [regex]$RegexUnsuccessfulLoginCount = '(?<=unsuccessful_login_count = ).+'
                 $UnsuccessfulLoginCount= ($RegexUnsuccessfulLoginCount.Matches($Line)).Value
                 $UnsuccessfulLoginCount = $UnsuccessfulLoginCount.Trim()
@@ -115,6 +104,7 @@ foreach ($Line in $File)
     {
         # Skip the first new line it comes across
         if (-not $Username) {Continue}
+
         $NewUserArgs = @{
             username                     = $Username
             time_last_login              = $TimeLastLogin
