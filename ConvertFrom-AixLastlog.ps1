@@ -14,7 +14,7 @@
 #>
     
 [CmdletBinding(HelpUri = 'https://github.com/dzampino/ConvertFrom-AixLastLog')]
-Param
+param
 (
     [Parameter(Mandatory = $true,
                ValueFromPipeline=$true)]
