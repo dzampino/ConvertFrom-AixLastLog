@@ -31,14 +31,21 @@
 
 <#
 .SYNOPSIS
-    Converts an AIX lastlog file into a exportable PowerShell object
+Converts an AIX lastlog file into a exportable PowerShell object
 
 .DESCRIPTION
-    The AIX /etc/security/lastlog contains the list of users and last logon dates. Unfortunately, the file is not 
-    in a format that can easily be worked with. In addition, the timestamps are in UTC time and must be converted.
+The AIX /etc/security/lastlog contains the list of users and last logon dates. Unfortunately, the file is not 
+in a format that can easily be worked with. In addition, the timestamps are in UTC time and must be converted.
 
 .PARAMETER InputObject
-    The lastlog file or file contents
+The lastlog file or file contents
+
+.EXAMPLE
+$lastlog = .\ConvertFrom-AixLastlog.ps1 -InputObject .\lastlog
+
+.EXAMPLE
+Get-ChildItem -Path $env:TEMP\lastlog | .\ConvertFrom-AixLastlog.ps1 | ConvertTo-Json | OutFile .\lastlog.json
+
 #>
     
 [CmdletBinding(HelpUri = 'https://github.com/dzampino/ConvertFrom-AixLastLog')]
@@ -49,7 +56,7 @@ param
     [string]$InputObject
 )
 
-Begin
+BEGIN
 {
     Set-StrictMode -Version Latest       
 
@@ -57,7 +64,7 @@ Begin
     $Username = $null
 }
 
-Process 
+PROCESS 
 {
     $File = Get-Content -Path $InputObject
 
@@ -171,4 +178,4 @@ Process
     }    
 }
 
-End {}
+END {}
